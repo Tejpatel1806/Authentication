@@ -1,6 +1,10 @@
-const authmiddlewarefunction =(req,res,next)=>{
-  console.log(req.headers);
+const authmiddlewarefunction = (req, res, next) => {
+  const authdata = req.headers.authorization;
+  if(!authdata)
+  {
+    
+  }
   console.log("middleware called");
   next();
-}
-module.exports={authmiddlewarefunction};
+};
+module.exports = { authmiddlewarefunction };
