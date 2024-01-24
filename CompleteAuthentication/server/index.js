@@ -1,10 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user");
+const jwt=require('jsonwebtoken');
 const cors = require("cors");
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin:["http://localhost:3000"],credentials:true}));
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/CompleteAuthenticationdemo")
@@ -23,6 +24,56 @@ app.post("/register", async (req, res) => {
   });
   res.send({msg:"success",user});
 });
+
+app.post("/login",async (req,res)=>{
+  const {email,password}=req.body;
+  const user=await User.findOne({email});
+  console.log(user);
+  if(!user)
+  {
+    res.json({Login:false,msg:"no record for User"});
+  }
+  else
+  {
+    
+    if(user.password===password)
+    {
+      //access token ane refresh token banne ni secret key alag alag hoy 
+       const accessToken=jwt.sign({email:email},"jwt-access-token-secret-key",{expiresIn:'1m'});
+       const refreshToken=jwt.sign({email:email},"jwt-refresh-token-secret-key",{expiresIn:'5m'});
+       res.cookie("accessToken",accessToken,{maxAge:60000});
+       res.cookie("refreshToken",refreshToken,{maxAge:300000,httpOnly:true,secure:true,sameSite:'strict'});
+       res.json({Login:true})
+    }
+  }
+
+})
+
+const verifyuser=(req,res,next)=>{
+  const accessToken=req.cookies.accessToken;
+  console.log(accessToken);
+  if(!accessToken)
+  {
+
+  }
+  else
+  {
+    jwt.verify(accessToken,"jwt-access-token-secret-key",(err,decoded)=>{
+      if(err)
+      {
+        return res.json({valid:false,message:"Invalid token"});
+      }
+      else
+      {
+        req.email=decoded.email;
+        next();
+      }
+    });
+  }
+}
+app.get("/dashboard",(req,res)=>{
+  return res.json({valid:true,message:"authorized"});
+})
 app.listen(8000, (err) => {
   if (!err) {
     console.log("Server is listening from port number 8000");
