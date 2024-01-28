@@ -1,0 +1,54 @@
+=>Authentication:-1.Statefull and 2>Stateless
+Session/Cookies aa badhu statefull ma aave jyare JWT Token che te stateless ma aave
+
+Statefull authentication ma kevu hoy ke jyare aapde login karva mate request moklie username ane password lai ne to server che te (have server tarike game te hoi sake nodejs ,php game te) database ma check karse ke aa username ane password database ma che ke nai em jo hase to e ek map banavse ane e map ma as a key tarike sessionid hase ane eni value tarike e user ni information hase like username,password,role ne e badhu ane e sessionid have e client ne as a response tarike pachi mokalse have client te session id ne cookies ma ke local storage ma store kari dese ane have jyare server par te fari request mokalse tyare te sessionid pan mokalse etle server map ma jose ke aa sessionid same aa user che to ene ena role mujab accesss karva dese badhu
+
+have client(user) jyare logout karse tyare teni entry je map ma hase e nikdi jase means map ma te user ni sessionid ane eni same ni user information nikdi jase
+
+have server che te map ne server ni memory ma store karse
+statefull ne aapde sessions pan kahie
+statefull authentication na drawbacks(disadvantages):- 1> aapdo je map che te server ni memory ma store thato hoy che assume karo ke aapdi website par billions and trillions users che have e badha ne map ma store karva jasu to aapdi server ni memory fullthai jase etle te scalability na kehvay
+2>aapdo map che te server ni memory ma store thayelo che have koi karansar server ne kaik thayu ane server restart thayu to map bhusai jase ane badha users aapoaap logout thai jase matlab server restart thay etle navi memory bane etle junu map clear thai jay ane navu empty map bani jase 
+
+stateless authentication ma koi state na hoy means aapde kasu store nai karavta em
+stateless ma jevi client request mokle login ni username ane password lai ne server uper ke tarat j server che te database ma check karse ke aa username ane password exist che ke nai em ane jo e hase to eni ek token banse e token ma user ni badhi information hase like username,password,email,id,role badhu have e token sign thase using secret key ,e secret key khali server ne j khabar hase have e aakhu badhu secret key thi sign thayelu token user ne pachu mokalse
+user e token ne local storage ke koi file ma store kari dese ane have jyare navi request mokalse data fetch ni tyare e token pan mokalse etle server che te e token mathi badhi information user ni che te jose ane have e user ne ena role mujab access karva dese badhu
+stateless ma mostly aapde jwt no j use karsu
+
+=>JWT Access token VS JWT refresh token :-
+
+Access Token:
+ Purpose: An access token is a short-lived token that is used to access protected resources on behalf of a user. It is commonly included in the Authorization header of HTTP requests to authenticate the user and grant access to specific resources.
+ Lifespan: Access tokens have a relatively short lifespan, typically ranging from minutes to hours.
+ Security: Since access tokens have a shorter expiration time, they reduce the risk in case they are compromised. If an attacker gains access to an access token, they have a limited time window to misuse it.
+ Refresh Token:
+ Purpose: A refresh token is a long-lived token that is used to obtain a new access token after the original access token expires. It is used to refresh the user's session without requiring them to re-enter their credentials.
+ Lifespan: Refresh tokens have a longer lifespan compared to access tokens. They are typically valid for days or even weeks.
+ Security: Since refresh tokens have a longer lifespan, they are usually stored securely and are not exposed to the client-side code. They are sent to the authorization server when a new access token is needed, reducing the risk of exposure.
+In a typical authentication flow using JWT in Node.js, the process involves obtaining an access token initially (after user authentication) and then using the refresh token to obtain a new access token when the current one expires. This helps maintain a balance between security (by having short-lived access tokens) and user experience (by using refresh tokens to avoid frequent re-authentication).
+Here's a simplified flow:
+ User logs in and obtains an access token and a refresh token.
+ The access token is used to access protected resources.
+ When the access token expires, the refresh token is used to obtain a new access token without requiring the user to log in again.
+
+ =>Authentication Architecture:-
+ jyare user(client) che te request mokalse server par username ane password lai ne etle server first of all database ma check karse ke aa username ane password database ma che ke nai ane jo hase to j e user ni ek JWT token banavse have e token ne aapde client(user) sudhi moklavani che e aapde 2 rite mokli saksu 1>Cookies and 2>Response
+ 1>Cookies :-
+ have jyare aapde res.cookie aam lakhie eno matlab server ek cookie banavse ane e cookie che te mokalse client(user) ne ,have jyare te client jode jay tyare browser nu default behaviour hoy che ke te cookie ne store kari lese ane have jyare te client koi pan request mokalse get,post,put,delete tyare te request jode cookies pan mokalse ane have server che te e cookie ma thi token lese ane e token ne validate karse ke aa token sachi j che ke nai em ane token validate thai gaya pachi token ma thi payload ma thi user information lese ane e user na role mujab ene access karva dese badhu
+ have darek request jode cookie mokalvi ane e cookie ne store karvi aa badhu browser nu default behaviour che aapde hathe kai larvu nai pade
+=>Cookie che te domain specific hoy che matlab client(user) che te request kare che facebook par ane facebook tene cookies return kare che ane e user store kari le che have assume karo ke same client(user) instagram par request kare che tyare instagram pan ek cookie return kare che ane e pan user store kari le che etle have user jode total 2 cookie thayi ane have jyare user fari instagram par request mokalse tyare te request jode khali instagram ni j cookie jase karan ke cookie che te domain specific hoy aa instagram ni cookie nu domain instagram che pachi facebook nu cookie domain facebook che etle have te jyare facebook par request karse tyare only facebook ni j cookie jase request jode
+aapda case ma domain tarike localhost hoy ane aapde cookie nu domain change pan kari sakie
+like:- res.cookie("uid",token,{domain:"www.google.com"});
+domain ma .google.com lakhie eno matlab evo thay ke aagd game te hoy chale like www.google.com,youtube.google.com aa badha nu cookie same domain ma save thase 
+mobile application ma cookie no use na thay te browser ma j hoy
+2>Response:-
+jyare client (user) request kare /login par username ane password lai ne etle server che te ek token generate karse e client mate ane have e token che te res.json({token}) aa rite mokalse have client ni responsibility che ke te token ne koi jagya e store kare ane darek request par tene mokle have client che ke darek requesr par headers ma authorization ma e token mokalse like headers:{
+    authorization:"Bearer token"
+}
+etle have server che te req.headers[authorization] aa rite eni value lai lese have ene split kari ne token ni value lai lese ane pachi e token ne validate karavse 
+cookie vadu khali browser ma j vapray te mobile application ma kam nai lage jyare response vadu badhe j kam lagse mobile application+browser banne jagya e 
+
+=>Authentication VS Authorization:-
+Authentication:-  Logging into your computer with your username and password.
+Authorization:- Once you're logged in, deciding whether you can view, edit, or delete specific files or settings based on your user role (like being an admin or a regular user).
+Authentication usually happens before authorization. First, you confirm your identity, and then the system decides what you're allowed to do.
