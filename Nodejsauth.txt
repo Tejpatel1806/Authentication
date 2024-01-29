@@ -52,3 +52,4 @@ cookie vadu khali browser ma j vapray te mobile application ma kam nai lage jyar
 Authentication:-  Logging into your computer with your username and password.
 Authorization:- Once you're logged in, deciding whether you can view, edit, or delete specific files or settings based on your user role (like being an admin or a regular user).
 Authentication usually happens before authorization. First, you confirm your identity, and then the system decides what you're allowed to do.
+In the authentication process, the identity of users are checked for providing the access to the system.While in authorization process, a the person’s or user’s authorities are checked for accessing the resources.
