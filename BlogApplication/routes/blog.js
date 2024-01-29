@@ -32,4 +32,12 @@ router.post("/", upload.single("coverImageURL"), async (req, res) => {
   console.log(req.file);
   res.redirect(`blog/${blog._id}`);
 });
+
+router.get("/:id",async (req,res)=>{
+const blog=await Blog.findById(req.params.id);
+return res.render("Blogdetails",{
+  user:req.user,
+  blog:blog
+})
+})
 module.exports = router;
