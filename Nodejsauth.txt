@@ -53,3 +53,21 @@ Authentication:-  Logging into your computer with your username and password.
 Authorization:- Once you're logged in, deciding whether you can view, edit, or delete specific files or settings based on your user role (like being an admin or a regular user).
 Authentication usually happens before authorization. First, you confirm your identity, and then the system decides what you're allowed to do.
 In the authentication process, the identity of users are checked for providing the access to the system.While in authorization process, a the person’s or user’s authorities are checked for accessing the resources.
+
+=>
+aa badhi vat aapde AWS cloud ma deploy karie tyar ni vat che:-
+Jyare aapde Nodejs ni koi application ne deploy karie tyare evu thay ke cloud che te aapda mate port generate karse aapde pehle thi port aapvani jarur nathi karan ke aapde pehle thi port 8000 aapi didhu ane cloud ma to gana badha application bija loko na deploy hase bani sake ema thi koi ek port 8000 par chalti hoy to e error batavse etle aapde const PORT=process.env.PORT|| 8000; aam lakhi devanu matlab evo thay ke jo cloud koi j port provide nai kare to e bydefault 8000 port par chalse inshort ek .env file banavani ane ema aapdo port ane mongodb ni link muki devani ane ene index.js ma import karai levani etle have jyare e deployment ma jase tyare e cloud jode thi automatic e lai lese port ane cloud nu mongodb ni link
+ane aapde termminal ma export PORT=2500 aam lakhi daie eno matlab pan evo j thay ke aa process.env.PORT ni value 2500 che
+have aapde AWS ma application deploy karie to aapdi main file nu name app.js j hovu joie ane aapde script ma evu mention karelu hovu joie ke "start":"node app.js" karan ke e bydefault npm start j karse
+
+=>WebSocket in NodeJs:-
+aapde atyar sudhi karta ta ema evu hatu ke client che te ek request kare server par ane server pachi response kare e request no ane have client che te connection close kari deto etle have client ne biji koi request karvi hoy to e fari request karse server par ,server respose karse e request no ane pachu connection close thai jase 
+have aano disadvantages e hato ke request-response cycle end thai jay pachi client ne kai data mokalvo hoy to e nai mokli sake etle ena mate aapde websocket use karie chie ,ane aano matlab evo thayo ke aa unidirectional communication thai gayu client start kare pachi j server response aapi sake ,server sidhu kai na mokli sake 
+
+Example:- assume karo ke 2 user che userA ane userB ,have userA ne koi message mokalvo che userB ne to e sidho userB ne to message nai mokli sake etla mate ek server establish karsu aapde ,userA che te message mokalse server ne ane userB darek 1 sec e server ne request moklya karse ke maro koi message aavyo che em etle server jode message aayo hase userB no te mokli dese userB ne eni request ma ,pan aama disadvantages e che ke server par load vadhi jase karan ke server par userB 1-1 sec e request karya karse ane bani sake userB no koi message aayo j na hoy to e request nu response pan nai made aa aakhi process ne polling kehvay ane aavu na karvu hoy to solution e che ke aapde websocket use karie 
+
+have websocket banava mate evu hoy ke client che te ek request mokalse Http ane ema headers ma upgrade muki dese etle jevi server jode aa request pochse ke ene khabar padi jase ke aa client che te server jode socket banava mage che,server e request ne accept karse ane have client ane server vachche socket bani gayu means have bidirectional data pan send kari sakase ,have server pan game tyare client ne kai bhi mokli sakse ane client pan game tyare server ne kai bhi mokli sakse 
+matlab websocket ni madad thi full duplex bi directional communication kari sakay ,nodeJs ma websocket ne implement karva mate aapde Socket.IO library use karsu
+
+=>NodeJS Stream:- 
+assume karo ke ek file che e text file che eni size 50MB che ane have jyare client / par request mokale tyare aapde aa file no badho data user ne batavano che ,have stream mate StreamNodeJs folder ne dhyan ma lo

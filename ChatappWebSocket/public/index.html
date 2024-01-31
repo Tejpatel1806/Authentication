@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+</head>
+<body>
+    <h1>Chatting</h1>
+    <input type="text" id="message" placeHolder="Enter Message"/>
+    <button id="sendBtn">Send</button>
+    <div id="messages"></div>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <!-- This below script initializes a WebSocket connection to the server using Socket.IO. The io() function is provided by the included Socket.IO library, and it establishes a connection to the server. -->
+    <script>
+        //aano(niche ni first line no) matlab evo thay ke client e ek socket banayu che em have e client koi message che te socket server par mokalse socket server nu kam ce te message ne badha sudhi pochadvanu 
+        const socket=io();
+        const sendbtn=document.getElementById("sendBtn");
+        const sendmessage=document.getElementById("message");
+        const allMessages = document.getElementById("messages");
+        sendbtn.addEventListener("click",(e)=>{
+            const message=sendmessage.value;
+            // console.log(message);
+            //aano matlab evo thay ke client e che te message ne emit(means socket server ne mokli didho ane ema name etle ke event tarike user-message rakhyu che )
+            socket.emit("user-message",message);
+        })
+        socket.on("message",(message)=>{
+        // console.log('A new user message frrom server',message);
+        const p = document.createElement("p");
+        p.innerText = message;
+        allMessages.appendChild(p);
+        
+    })
+
+    </script>
+</body>
+</html>

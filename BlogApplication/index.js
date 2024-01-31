@@ -15,6 +15,8 @@ mongoose
   });
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//images ne evi static file ne serve karva mate aapde aa niche mujab nu middleware vaprvu pade ema express.static() lakhvanu ane ema path aapvano e file no jema aapdu static content store hoy
 app.use(express.static(path.resolve('./public')));
 app.use(checkForAuthenticationmCookie("token"));
 app.set("view engine", "ejs");
