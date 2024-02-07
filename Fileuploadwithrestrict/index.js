@@ -4,7 +4,6 @@ const path = require("path");
 const app = express();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log(file);
     return cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
@@ -13,21 +12,33 @@ const storage = multer.diskStorage({
 });
 
 
-const maxsize=2*1024*1024;//approax 2MB 
-const upload = multer({ storage: storage,
-fileFilter:(req,file,cb)=>{
-    console.log(file);
-    if(file.mimetype==="image/png"  || file.mimetype==="image/jpg" || file.mimetype==="image/jpeg"  )
-    {
-        cb(null,true);
+// const upload = multer({ storage: storage,
+//   fileFilter:(req,file,cb)=>{
+//       console.log(file);
+//       if(file.mimetype==="image/png"  || file.mimetype==="image/jpg" || file.mimetype==="image/jpeg"  )
+//       {
+//           cb(null,true);
+//       }
+//       else
+//       {
+//           cb(null,false);
+//           return cb (new Error('Only png and jpg format allowed!!'));
+//       }
+//   } })
+  // limits:{fileSize:maxsize}});
+
+const maxsize = 2 * 1024 * 1024; //approax 2MB
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
+      return cb(new Error("Please upload a Image"));
     }
-    else
-    {
-        cb(null,false);
-        return cb (new Error('Only png and jpg format allowed!!'));
-    }
-} })
-// limits:{fileSize:maxsize}});
+    cb(undefined, true);
+  },
+  limits:{fileSize:maxsize}
+});
+
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
