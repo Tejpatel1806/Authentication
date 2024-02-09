@@ -74,3 +74,11 @@ matlab websocket ni madad thi full duplex bidirectional communication kari sakay
 
 websocket ek communication protocol che jem ke http,https,ftp,smtp che e rite
 Socket.IO:-
+emit:- emit no matlab evo thay ke ek event trigger karse ane e event ma data mokalse 
+on:- on no matlab evo thay ke e ek event ne listen kare che means jyare emit thi koi event trigger thay te on ma aavse ane on te data ne receive karse
+matlab server side aapde io.emit(event1,"hello") aam lakhsu jyare client side socket.on(event1,(data)=>{
+    console.log(data);
+}) aam karsu aano matlab evo thayo ke jyare server event1 ne emit karse tyare client che te on ni madad thi e event ne listen karse ane je data server e  moklyo che ene print karavse
+
+NOTE:-io.emit() karva thi jetla pan client che te server jode socket thi connected hoy e badha jode message jase
+jyare socket.emit() karva thi e particular client par j message jase 
