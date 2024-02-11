@@ -73,6 +73,8 @@ have websocket banava mate evu hoy ke client che te ek request mokalse Http ane 
 matlab websocket ni madad thi full duplex bidirectional communication kari sakay ,nodeJs ma websocket ne implement karva mate aapde Socket.IO library use karsu
 
 websocket ek communication protocol che jem ke http,https,ftp,smtp che e rite
+NOTE:- IO matlab entire server(server ni andar gana badha socket hoy) ane Socket etle particular client ke jene socket connection banayu che te 
+darek socket ni ek SID hoy je unique hoy
 Socket.IO:-
 emit:- emit no matlab evo thay ke ek event trigger karse ane e event ma data mokalse 
 on:- on no matlab evo thay ke e ek event ne listen kare che means jyare emit thi koi event trigger thay te on ma aavse ane on te data ne receive karse
@@ -80,5 +82,6 @@ matlab server side aapde io.emit(event1,"hello") aam lakhsu jyare client side so
     console.log(data);
 }) aam karsu aano matlab evo thayo ke jyare server event1 ne emit karse tyare client che te on ni madad thi e event ne listen karse ane je data server e  moklyo che ene print karavse
 
-NOTE:-io.emit() karva thi jetla pan client che te server jode socket thi connected hoy e badha jode message jase
+socket.broadcast.emit(event1,"hello") aano matlab evo thay ke je socket thi aa statement lakhyu che ena sivay na badha socket jode aa message jato rehse 
+NOTE:-io.emit() karva thi jetla pan client che je server jode socket thi connected hoy e badha jode message jase
 jyare socket.emit() karva thi e particular client par j message jase 
