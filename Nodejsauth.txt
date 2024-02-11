@@ -85,3 +85,6 @@ matlab server side aapde io.emit(event1,"hello") aam lakhsu jyare client side so
 socket.broadcast.emit(event1,"hello") aano matlab evo thay ke je socket thi aa statement lakhyu che ena sivay na badha socket jode aa message jato rehse 
 NOTE:-io.emit() karva thi jetla pan client che je server jode socket thi connected hoy e badha jode message jase
 jyare socket.emit() karva thi e particular client par j message jase 
+
+=>CORS(CROSS ORIGIN RESOURCE SHARING):-
+assume karo ke ek web application che ane enu domain akshaysaini.in che ane have e application ne google.com/api par koi request mokalvi che to te browser allowed nai kare karan ke different origin kadi resources share na kari sake (different origin means banne na domain different hase )
