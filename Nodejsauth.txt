@@ -88,3 +88,28 @@ jyare socket.emit() karva thi e particular client par j message jase
 
 =>CORS(CROSS ORIGIN RESOURCE SHARING):-
 assume karo ke ek web application che ane enu domain akshaysaini.in che ane have e application ne google.com/api par koi request mokalvi che to te browser allowed nai kare karan ke different origin kadi resources share na kari sake (different origin means banne na domain different hase )
+ane browser subdomain ma pan request allowed nai kare like akshaysaini.in che te tena subdomain api.akshaysaini.in par request kare che tpuser te pan allowed nai kare 
+ane browser different port par pan request allowed nai kare like akshaysaini.in che te port number 3000 par chale che ane have te akshaysaini.in port number 8000 par request karse to browser e pan allowed nai kare 
+ane browser different protocol par pan request ne allowed nai kare like https:akshaysaini.in che te http:akshaysaini.in par request na kari sake karan ke banne na protocol alag alag che ek no http ane bija no https
+uper ni badhi limitation aapde cors ni madad thi dur kari sakay
+assume karo ke ek webapplication1 che je origin1 par chale che ,ane biji webapplication2 che je origin2 par chale che ,have jyare banne different origin par che ane aapde ema cors no use karsu to ema banse evu ke jyare webapplication1 che te koi post request mokalse webapplication2 par to e pela prefight request jase ane e prefight request na response ma options aavse jema additional http method hase ane have final post request thase 
+
+Browsers create preflight requests if they are needed. It's an OPTIONS request like the following one.
+
+OPTIONS /data HTTP/1.1
+Origin: https://example.com
+Access-Control-Request-Method: DELETE
+
+The browser sends the preflight request before the actual request message. The server must respond to the preflight request with information about the cross-origin requests the server’s willing to accept from the client URL. The server response headers must include the following:
+
+Access-Control-Allow-Methods(aama method aapvani ke kayi kayi method hoy toj allowed karsu em like GET,POST,PUT,DELETE)
+Access-Control-Allow-Headers
+Access-Control-Allow-Origin:*(8 matlab badha origin vada ene access kari sake)
+
+An example server response is given below
+
+HTTP/1.1 200 OK
+Access-Control-Allow-Headers: Content-Type
+Access-Control-Allow-Origin: https://news.example.com
+Access-Control-Allow-Methods: GET, DELETE, HEAD, OPTIONS
+
